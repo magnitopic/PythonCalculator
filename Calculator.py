@@ -1,0 +1,26 @@
+from tkinter import *
+
+root = Tk()
+root.geometry('200x200')
+root.title("Calculator")
+
+delButton = Button(root, text="Del").grid(row=4, column=2)
+equButton = Button(root, text="=").grid(row=4, column=3)
+sumButton = Button(root, text="+").grid(row=3, column=3)
+subButton = Button(root, text="-").grid(row=2, column=3)
+mulButton = Button(root, text="*").grid(row=1, column=3)
+divButton = Button(root, text="/").grid(row=0, column=3)
+dotButton = Button(root, text=".").grid(row=4, column=1)
+zeroButton = Button(root, text="0").grid(row=4, column=0)
+oneButton = Button(root, text="1").grid(row=3, column=0)
+twoButton = Button(root, text="2").grid(row=3, column=1)
+threeButton = Button(root, text="3").grid(row=3, column=2)
+fourButton = Button(root, text="4").grid(row=2, column=0)
+fiveButton = Button(root, text="5").grid(row=2, column=1)
+sixButton = Button(root, text="6").grid(row=2, column=2)
+sevenButton = Button(root, text="7").grid(row=1, column=0)
+eightButton = Button(root, text="8").grid(row=1, column=1)
+nineButton = Button(root, text="9").grid(row=1, column=2)
+input = Entry(root, width=15).grid(row=0, column=0, columnspan=3)
+
+root.mainloop()
