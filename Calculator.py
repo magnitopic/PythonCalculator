@@ -1,28 +1,57 @@
 from tkinter import *
+from tkinter import messagebox
 
 root = Tk()
 root.geometry('200x200')
 root.title("Calculator")
 input = Entry(root, width=15)
 input.grid(row=0, column=0, columnspan=3)
+operators = list("+-/*")
 
 
 def click(charecter):
-    connent = input.get()
+    content = input.get()
     input.delete(0, END)
-    input.insert(0, connent + charecter)
+    input.insert(0, content + charecter)
 
 
 def delete():
-	position=len(input.get())-1
-	input.delete(position,END)
+    position = len(input.get())-1
+    input.delete(position, END)
+
 
 def equal():
-	connent = input.get()
+    firstNum, secondNum = 0, []
+    content = list(input.get())
+    print(content)
+    for i in content:
+        if i in operators:
+            secondNum = float(''.join(secondNum))
+            if i == "+":
+                firstNum += secondNum
+            elif i == "-":
+                firstNum -= secondNum
+            elif i == "÷":
+                firstNum /= secondNum
+            elif i == "×":
+                firstNum *= secondNum
+            secondNum = []
+            input.delete(0, END)
+            input.insert(0, firstNum)
+        else:
+            try:
+                if i == ".":
+                    i = ".0"
+                secondNum.append(i)
+                print("secondNUm:", secondNum)
+            except:
+                messagebox.showerror("ERROR", "Input is invalid. Try again.")
+                break
+
 
 delButton = Button(root, text="Del", command=delete)
 delButton.grid(row=4, column=2)
-equButton = Button(root, text="=", command=lambda: click())
+equButton = Button(root, text="=", command=equal)
 equButton.grid(row=4, column=3)
 sumButton = Button(root, text="+", command=lambda: click("+"))
 sumButton.grid(row=3, column=3)
@@ -34,7 +63,6 @@ divButton = Button(root, text="÷", command=lambda: click("÷"))
 divButton.grid(row=0, column=3)
 dotButton = Button(root, text=".", command=lambda: click("."))
 dotButton.grid(row=4, column=1)
-
 # Number buttons
 zeroButton = Button(root, text="0", command=lambda: click("0"))
 zeroButton.grid(row=4, column=0)
