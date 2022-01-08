@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 
 root = Tk()
-root.geometry('400x400')
+root.geometry('500x400')
 root.title("Calculator")
 input = Entry(root, width=35)
 input.grid(row=0, column=0, padx="10", pady="10", columnspan=3)
@@ -10,9 +10,7 @@ operators = list("+-÷×")
 
 
 def click(charecter):
-    content = input.get()
-    input.delete(0, END)
-    input.insert(0, content + charecter)
+    input.insert(END, charecter)
 
 
 def delete():
@@ -20,51 +18,16 @@ def delete():
     input.delete(position, END)
 
 
-def operation(symbol, firstNum, secondNum):
-    if firstNum == None:
-        try:
-            firstNum = float(''.join(secondNum))
-        except:
-            messagebox.showerror("ERROR", "Input is invalid. Try again.")
-            input.delete(0, END)
-    else:
-        try:
-            secondNum = float(''.join(secondNum))
-            if symbol == "+":
-                firstNum = firstNum + secondNum
-            elif symbol == "-":
-                firstNum = firstNum - secondNum
-            elif symbol == "÷":
-                firstNum = firstNum / secondNum
-            elif symbol == "×":
-                firstNum = firstNum * secondNum
-        except:
-            messagebox.showerror("ERROR", "Input is invalid. Try again.")
-            input.delete(0, END)
-    print(firstNum)
-    return firstNum
-
-
 def equal():
-    secondNum, firstNum, symbol = [], None, None
-    content = list(input.get())
-    # Cheks that there is an operator and that the first and last characters arent one
-    if any(x in operators for x in content) and content[0] not in operators and content[len(content)-1] not in operators:
-        for i in range(len(content)):
-            if content[i] in operators:
-                print(secondNum
-                )
-                firstNum = operation(symbol, firstNum, secondNum)
-                secondNum = []
-                symbol = content[i]
-            else:
-                secondNum.append(content[i])
-            if i+1 == len(content):
-                input.delete(0, END)
-                input.insert(0, operation(symbol, firstNum, secondNum))
-    else:
+    content = input.get()
+    try:
+        content=eval(content)
+    except:
         messagebox.showerror("ERROR", "Input is invalid. Try again.")
         input.delete(0, END)
+    else:
+        input.delete(0, END)
+        input.insert(0, content)
 
 
 delButton = Button(root, text="Del", padx="40", pady="20", command=delete)
