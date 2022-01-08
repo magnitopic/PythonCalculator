@@ -6,7 +6,6 @@ root.geometry('500x400')
 root.title("Calculator")
 input = Entry(root, width=35)
 input.grid(row=0, column=0, padx="10", pady="10", columnspan=3)
-operators = list("+-÷×")
 
 
 def click(charecter):
@@ -40,11 +39,11 @@ sumButton.grid(row=3, column=3)
 subButton = Button(root, text="-", padx="40", pady="20",
                    command=lambda: click("-"))
 subButton.grid(row=2, column=3)
-mulButton = Button(root, text="×", padx="40", pady="20",
-                   command=lambda: click("×"))
+mulButton = Button(root, text="*", padx="40", pady="20",
+                   command=lambda: click("*"))
 mulButton.grid(row=1, column=3)
-divButton = Button(root, text="÷", padx="40", pady="20",
-                   command=lambda: click("÷"))
+divButton = Button(root, text="/", padx="40", pady="20",
+                   command=lambda: click("/"))
 divButton.grid(row=0, column=3)
 dotButton = Button(root, text=".", padx="40", pady="20",
                    command=lambda: click("."))
