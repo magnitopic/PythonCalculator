@@ -2,11 +2,11 @@ from tkinter import *
 from tkinter import messagebox
 
 root = Tk()
-root.geometry('200x200')
+root.geometry('400x400')
 root.title("Calculator")
 input = Entry(root, width=15)
 input.grid(row=0, column=0, columnspan=3)
-operators = list("+-/*")
+operators = list("+-÷×")
 
 
 def click(charecter):
@@ -20,33 +20,45 @@ def delete():
     input.delete(position, END)
 
 
+def operation(symbol, firstNum, secondNum):
+    try:
+        firstNum = float(''.join(firstNum))
+        secondNum = float(''.join(secondNum))
+        if symbol == "+":
+            return firstNum + secondNum
+        elif symbol == "-":
+            return firstNum - secondNum
+        elif symbol == "÷":
+            return firstNum / secondNum
+        elif symbol == "×":
+            return firstNum * secondNum
+    except:
+        messagebox.showerror("ERROR", "Input is invalid. Try again.")
+        input.delete(0, END)
+
+
 def equal():
-    firstNum, secondNum = 0, []
+    secondNum, symbol = [], None
     content = list(input.get())
-    print(content)
-    for i in content:
-        if i in operators:
-            secondNum = float(''.join(secondNum))
-            if i == "+":
-                firstNum += secondNum
-            elif i == "-":
-                firstNum -= secondNum
-            elif i == "÷":
-                firstNum /= secondNum
-            elif i == "×":
-                firstNum *= secondNum
-            secondNum = []
-            input.delete(0, END)
-            input.insert(0, firstNum)
-        else:
-            try:
-                if i == ".":
-                    i = ".0"
-                secondNum.append(i)
-                print("secondNUm:", secondNum)
-            except:
-                messagebox.showerror("ERROR", "Input is invalid. Try again.")
-                break
+    # Cheks that there is an operator and that the first and last characters arent one
+    if any(x in operators for x in content) and content[0] not in operators and content[len(content)-1] not in operators:
+        for i in range(len(content)):
+            if content[i] in operators:
+                if symbol == None:
+                    firstNum = secondNum
+                else:
+                    firstNum = operation(symbol, firstNum, secondNum)
+                secondNum = []
+                symbol = content[i]
+            else:
+                secondNum.append(content[i])
+            if i+1 == len(content):
+                firstNum = operation(symbol, firstNum, secondNum)
+        input.delete(0, END)
+        input.insert(0, firstNum)
+    else:
+        messagebox.showerror("ERROR", "Input is invalid. Try again.")
+        input.delete(0, END)
 
 
 delButton = Button(root, text="Del", command=delete)
